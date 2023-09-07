@@ -46,8 +46,9 @@ if (isset($_GET['slack_name']) && isset($_GET['track'])) {
         "current_day" => $currentDay,
         "utc_time" => $currentUTC,
         "track" => $track,
-        "github_file_url" => "https://github.com/username/repo/blob/main/file_name.ext",
-        "github_repo_url" => "https://github.com/username/repo",
+        "track" => $track,
+        "github_file_url" => "https://github.com/Appleeyes/EndPoint-Project/blob/main/endpoint.php",
+        "github_repo_url" => "https://github.com/Appleeyes/EndPoint-Project",
         "status_code" => 200
     ];
 
