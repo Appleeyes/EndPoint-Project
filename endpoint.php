@@ -1,12 +1,14 @@
 <?php
 // Function to get the current day of the week
-function getCurrentDay() {
+function getCurrentDay()
+{
     $daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return $daysOfWeek[date('w')];
 }
 
 // Function to get the current UTC time with validation of +/-2 minutes
-function getCurrentUTC() {
+function getCurrentUTC()
+{
     $currentTime = time();
     $validWindow = 120; // 2 minutes in seconds
     $currentUTC = gmdate('Y-m-d\TH:i:s\Z', $currentTime);
@@ -20,13 +22,13 @@ function getCurrentUTC() {
     }
 }
 
-// Check if slack_name and track parameters are provided in the URL
+// Validate and process GET parameters
 if (isset($_GET['slack_name']) && isset($_GET['track'])) {
     $slackName = $_GET['slack_name'];
     $track = $_GET['track'];
 
-    // Validate track
-    if ($track === '') {
+    // Validate track (assuming 'backend' is the only valid value)
+    if ($track !== 'backend') {
         http_response_code(400); // Bad Request
         die('Invalid track value.');
     }
@@ -46,15 +48,14 @@ if (isset($_GET['slack_name']) && isset($_GET['track'])) {
         "current_day" => $currentDay,
         "utc_time" => $currentUTC,
         "track" => $track,
-        "track" => $track,
         "github_file_url" => "https://github.com/Appleeyes/EndPoint-Project/blob/main/endpoint.php",
         "github_repo_url" => "https://github.com/Appleeyes/EndPoint-Project",
         "status_code" => 200
     ];
 
-    // Set response headers and send JSON
+    // Set response headers and send JSON with JSON_UNESCAPED_SLASHES option
     header('Content-Type: application/json');
-    echo json_encode($response);
+    echo json_encode($response, JSON_UNESCAPED_SLASHES);
 } else {
     http_response_code(400); // Bad Request
     echo 'Missing required parameters.';
